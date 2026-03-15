@@ -68,6 +68,38 @@ const H=[];
 const chk=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const vnNotices=['필요서류를 메일로 보내주실 때, 머무르실 베트남 주소와 연락처를 작성해주세요.','비자는 입국예정일부터 유효기간이 시작되므로, 정확한 입국일~출국일을 입력해주세요. 일정 변동 가능성이 있다면 여유있는 날짜로 신청하시는 것을 권장합니다.'];
 
+const jpResults={
+  jp_adult_tour: {
+    title: '일본 비자 — 성인 / 관광비자',
+    sections: [{ docs: ['신청서', '여권 사본', '증명사진 사본', 'ARC 사본 (앞/뒤)', '여행일정표', '은행잔고증명서 사본', '외국인등록사실증명원 사본', '이티켓'], costs: [{l:'비자 수수료',v:'170,000원'},{l:'대행 수수료',v:'20,000원'}], duration: '7~8 영업일' }],
+    notices: ['신청서 서명은 여권 서명과 동일하게 작성해주세요.', '모든 서류는 사본으로 메일 제출해주세요.'],
+    type: 'adult'
+  },
+  jp_adult_biz: {
+    title: '일본 비자 — 성인 / 교류비자',
+    sections: [{ docs: ['신청서 (원본)', '여권 (원본)', '증명사진 (원본)', 'ARC 사본 (앞/뒤)', '여행일정표', '은행잔고증명서 (원본)', '외국인등록사실증명원 (원본)', '이티켓', '초청이유서 (원본)', '출장증명서 (원본)'], costs: [{l:'비자 수수료',v:'170,000원'},{l:'대행 수수료',v:'20,000원'}], duration: '7~8 영업일' }],
+    notices: ['신청서 서명은 여권 서명과 동일하게 작성해주세요.'],
+    type: 'adult'
+  },
+  jp_minor_tour: {
+    title: '일본 비자 — 미성년 / 관광비자',
+    self: ['신청서', '여권 사본', '증명사진 사본', 'ARC 사본 (앞/뒤)', '여행일정표', '외국인등록사실증명원', '이티켓'],
+    parent: ['부모님 외국인등록사실증명원', '부모님 중 한 분의 은행잔고증명서'],
+    costs: [{l:'비자 수수료',v:'170,000원'},{l:'대행 수수료',v:'20,000원'}],
+    duration: '7~8 영업일',
+    notices: ['신청서 서명은 여권 서명과 동일하게 작성해주세요.', '신청서 서명란에 부모님 중 한 분의 서명이 필요합니다.'],
+    type: 'minor'
+  },
+  jp_minor_biz: {
+    title: '일본 비자 — 미성년 / 교류비자',
+    self: ['신청서 (원본)', '여권 (원본)', '증명사진 (원본)', 'ARC 사본 (앞/뒤)', '여행일정표', '외국인등록사실증명원 (원본)', '이티켓', '초청이유서 (원본)', '출장증명서 (원본)', '재학증명서', '학교 공문'],
+    parent: ['부모님 외국인등록사실증명원', '부모님 중 한 분의 은행잔고증명서'],
+    costs: [{l:'비자 수수료',v:'170,000원'},{l:'대행 수수료',v:'20,000원'}],
+    duration: '7~8 영업일',
+    notices: ['신청서 서명은 여권 서명과 동일하게 작성해주세요.', '신청서 서명란에 부모님 중 한 분의 서명이 필요합니다.'],
+    type: 'minor'
+  },
+};
 const vnResults={
   vn_30:{title:'베트남 관광비자 30일 단수',sections:[{docs:['여권 사본 (빛번짐 없이 선명하게)','증명사진 사본'],costs:[{l:'비자 수수료',v:'USD $25'},{l:'대행 수수료',v:'20,000원'}],duration:'4~5 영업일'}],notices:vnNotices},
   vn_90:{title:'베트남 관광비자 90일 복수',sections:[{docs:['여권 사본 (빛번짐 없이 선명하게)','증명사진 사본'],costs:[{l:'비자 수수료',v:'USD $50'},{l:'대행 수수료',v:'20,000원'}],duration:'4~5 영업일'}],notices:vnNotices},
@@ -104,6 +136,27 @@ function showOpts(opts,backable){
 
 function docList(docs){return docs.map(d=>`<div class="ci"><div class="ck">${chk}</div><span>${d}</span></div>`).join('');}
 function costRow(l,v){return`<div class="cr"><span class="cl">${l}</span><span class="cv">${v}</span></div>`;}
+
+
+function showJpResult(key){
+  const r=jpResults[key];
+  const email=atob('eW1sOTY5OEBnbWFpbC5jb20=');
+  let docsHTML='';
+  if(r.type==='adult'){
+    const secs=r.sections.map((s,i)=>{
+      const dur=s.duration?`<div class="rsec"><div class="rl">소요기간</div><div class="rcon">${s.duration}</div></div>`:'';
+      return (i>0?'<hr class="sd">':'')+`<div class="rsec"><div class="rl">필요 서류</div>${docList(s.docs)}</div><div class="rsec"><div class="rl">비용</div>${s.costs.map(c=>costRow(c.l,c.v)).join('')}</div>${dur}`;
+    }).join('');
+    docsHTML=secs;
+  } else {
+    docsHTML=`<div class="rsec"><div class="stag">본인 서류</div><div class="rl">필요 서류</div>${docList(r.self)}</div><hr class="sd"><div class="rsec"><div class="ptag">추가 서류</div><div class="rl">부모님 서류</div>${docList(r.parent)}</div><div class="rsec"><div class="rl">비용</div>${r.costs.map(c=>costRow(c.l,c.v)).join('')}</div><div class="rsec"><div class="rl">소요기간</div><div class="rcon">${r.duration}</div></div>`;
+  }
+  const noticesHTML=r.notices.length?`<div class="rsec"><div class="rl">유의사항</div><div class="nb">${r.notices.map((n,i)=>`<div class="ni"><span class="nn">${i+1}.</span><span>${n}</span></div>`).join('')}</div></div>`:'';
+  document.getElementById('opts').innerHTML=`
+    <div class="rc"><div class="rh"><div class="rt">${r.title}</div><div class="rs">신청 서류 안내</div></div><div class="rb">${docsHTML}${noticesHTML}</div></div>
+    <div class="mb"><div class="mbl">서류 제출</div><div class="mbr"><span style="font-size:16px">✉</span><span class="mba">${email}</span></div><div class="mbd">위 이메일로 필요 서류를 보내주시면 빠르게 처리해드립니다.</div></div>
+    <div class="btns"><button class="rb2" onclick="restart()">처음으로 돌아가기</button><button class="bkc" onclick="back()">← 뒤로가기</button></div>`;
+}
 
 function showVnResult(key){
   const r=vnResults[key];
@@ -166,7 +219,10 @@ function hc(v,l,n){
   setTimeout(()=>{
     if(n==='country'){
       st.country=v;
-      if(v==='vietnam'){
+      if(v==='japan'){
+        addBot('비자 신청자의 나이를 선택해주세요.');
+        showOpts([{v:'adult',l:'성인',n:'jp_age'},{v:'minor',l:'미성년 (18세 미만)',n:'jp_age'}],true);
+      } else if(v==='vietnam'){
         addBot('비자 신청자의 비자 종류를 선택해주세요.');
         showOpts([{v:'vn_30',l:'관광비자 30일 단수',n:'vn_result'},{v:'vn_90',l:'관광비자 90일 복수',n:'vn_result'}],true);
       } else if(v==='indonesia'){
@@ -185,6 +241,17 @@ function hc(v,l,n){
     } else if(n==='id_result'){
       addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
       setTimeout(()=>showVnResult(v),300);
+    } else if(n==='jp_age'){
+      if(v==='adult'){
+        addBot('비자 신청자의 여행 목적을 선택해주세요.');
+        showOpts([{v:'jp_adult_tour',l:'관광비자 (개인/가족여행)',n:'jp_result'},{v:'jp_adult_biz',l:'교류비자 (학교/기업활동)',n:'jp_result'}],true);
+      } else {
+        addBot('비자 신청자의 여행 목적을 선택해주세요.');
+        showOpts([{v:'jp_minor_tour',l:'관광비자 (개인/가족여행)',n:'jp_result'},{v:'jp_minor_biz',l:'교류비자 (학교/기업활동)',n:'jp_result'}],true);
+      }
+    } else if(n==='jp_result'){
+      addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
+      setTimeout(()=>showJpResult(v),300);
     } else if(n==='cn_nat'){
       st.nat=v;
       addBot('비자 신청자의 나이를 선택해주세요.');
@@ -224,7 +291,7 @@ function restart(){H.length=0;Object.keys(st).forEach(k=>st[k]='');document.getE
 function init(){
   setTimeout(()=>{
     addBot('안녕하세요! 비자 신청 서류를 안내해드릴게요. 비자 신청자의 목적지 국가를 선택해주세요.');
-    showOpts([{v:'vietnam',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1fb-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">베트남',n:'country'},{v:'indonesia',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1ee-1f1e9.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">인도네시아',n:'country'},{v:'china',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1e8-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">중국',n:'country'}],false);
+    showOpts([{v:'japan',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1ef-1f1f5.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">일본',n:'country'},{v:'vietnam',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1fb-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">베트남',n:'country'},{v:'indonesia',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1ee-1f1e9.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">인도네시아',n:'country'},{v:'china',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1e8-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">중국',n:'country'}],false);
   },200);
 }
 init();
