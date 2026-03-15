@@ -35,8 +35,8 @@
   .rl { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
   .rsec { display: flex; flex-direction: column; gap: 6px; }
   .rcon { font-size: 14px; color: #111; line-height: 1.6; }
-  .ci { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: #111; line-height: 1.5; }
-  .ck { width: 18px; height: 18px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ci { display: flex; gap: 8px; align-items: center; font-size: 14px; color: #111; line-height: 1.5; }
+  .ck { width: 18px; height: 18px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .cr { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
   .cr:last-child { border-bottom: none; }
   .cl { font-size: 13px; color: #666; }
@@ -76,10 +76,10 @@ const vnResults={
 };
 
 const cnDocs={
-  adult_tour:['신청서','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','호텔바우처 (신청자 이름 필수)','이티켓','여행일정표'],
-  adult_biz:['신청서','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','중국 발행 초청장'],
-  minor_kr:{self:['신청서','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','기본증명서 상세본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류','기본증명서 상세본 (한국 국적 변경자에 해당)']},
-  minor_orig:{self:['신청서','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','외국인등록사실증명원 원본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류']}
+  adult_tour:['신청서 <a href="https://docs.google.com/document/d/1Mw4uzlf0wKPypoPX9RmUfREL1JD796gf/export?format=pdf" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:3px 8px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;font-size:11px;color:#3C3489;font-weight:600;text-decoration:none;vertical-align:middle;">⬇ 신청서 다운로드</a>','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','호텔바우처 (신청자 이름 필수)','이티켓','여행일정표 <a href="https://docs.google.com/document/d/1vOn_VKc7ShiqUPuLUhusV_VokgIL9jF1/export?format=pdf" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:3px 8px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;font-size:11px;color:#3C3489;font-weight:600;text-decoration:none;vertical-align:middle;">⬇ 예시 다운로드</a>'],
+  adult_biz:['신청서 <a href="https://docs.google.com/document/d/1Mw4uzlf0wKPypoPX9RmUfREL1JD796gf/export?format=pdf" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:3px 8px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;font-size:11px;color:#3C3489;font-weight:600;text-decoration:none;vertical-align:middle;">⬇ 신청서 다운로드</a>','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','중국 발행 초청장'],
+  minor_kr:{self:['신청서 <a href="https://docs.google.com/document/d/1Kr1rJHPymGSX6g5SpKYuYKsfxb8L2ofy/export?format=pdf" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:3px 8px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;font-size:11px;color:#3C3489;font-weight:600;text-decoration:none;vertical-align:middle;">⬇ 신청서 다운로드</a>','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','기본증명서 상세본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류','기본증명서 상세본 (한국 국적 변경자에 해당)']},
+  minor_orig:{self:['신청서 <a href="https://docs.google.com/document/d/1Kr1rJHPymGSX6g5SpKYuYKsfxb8L2ofy/export?format=pdf" target="_blank" style="display:inline-flex;align-items:center;gap:4px;margin-left:8px;padding:3px 8px;background:#EEEDFE;border:1px solid #AFA9EC;border-radius:6px;font-size:11px;color:#3C3489;font-weight:600;text-decoration:none;vertical-align:middle;">⬇ 신청서 다운로드</a>','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','외국인등록사실증명원 원본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류']}
 };
 
 const cnCosts={
@@ -224,7 +224,7 @@ function restart(){H.length=0;Object.keys(st).forEach(k=>st[k]='');document.getE
 function init(){
   setTimeout(()=>{
     addBot('안녕하세요! 비자 신청 서류를 안내해드릴게요. 비자 신청자의 목적지 국가를 선택해주세요.');
-    showOpts([{v:'vietnam',l:'베트남',n:'country'},{v:'indonesia',l:'인도네시아',n:'country'},{v:'china',l:'중국',n:'country'}],false);
+    showOpts([{v:'vietnam',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1fb-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">베트남',n:'country'},{v:'indonesia',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1ee-1f1e9.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">인도네시아',n:'country'},{v:'china',l:'<img src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f1e8-1f1f3.png" style="width:18px;height:18px;vertical-align:middle;margin-right:6px">중국',n:'country'}],false);
   },200);
 }
 init();
