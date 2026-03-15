@@ -7,188 +7,225 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: #f5f5f3; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 2rem 1rem; min-height: 100vh; }
-  .bot-wrap { width: 100%; max-width: 480px; }
-  .chat-box { border: 1px solid #e0e0e0; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
-  .chat-header { background: #f8f8f6; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 10px; }
-  .bot-avatar { width: 32px; height: 32px; border-radius: 50%; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
-  .chat-header-text { font-size: 14px; font-weight: 600; color: #111; }
-  .chat-header-sub { font-size: 12px; color: #888; margin-top: 1px; }
-  .messages { padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 180px; }
+  .bw { width: 100%; max-width: 480px; }
+  .cb { border: 1px solid #e0e0e0; border-radius: 16px; overflow: hidden; background: #fff; box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+  .ch { background: #f8f8f6; padding: 14px 16px; border-bottom: 1px solid #e0e0e0; display: flex; align-items: center; gap: 10px; }
+  .ca { width: 32px; height: 32px; border-radius: 50%; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+  .cht { font-size: 14px; font-weight: 600; color: #111; }
+  .chs { font-size: 12px; color: #888; margin-top: 1px; }
+  .msgs { padding: 16px; display: flex; flex-direction: column; gap: 12px; min-height: 160px; }
   .msg { display: flex; gap: 8px; align-items: flex-start; }
-  .msg.user { flex-direction: row-reverse; }
-  .bubble { padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; max-width: 82%; }
-  .bubble.bot { background: #f2f2f0; color: #111; border-bottom-left-radius: 4px; }
-  .bubble.user { background: #534AB7; color: #fff; border-bottom-right-radius: 4px; }
-  .avatar-sm { width: 28px; height: 28px; border-radius: 50%; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
-  .options-wrap { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
-  .opt-btn { padding: 10px 14px; border: 1px solid #d0d0d0; border-radius: 10px; background: #fff; color: #111; font-size: 14px; cursor: pointer; text-align: left; transition: background 0.15s; width: 100%; }
-  .opt-btn:hover { background: #f5f5f5; }
-  .back-btn-left { padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f8f6; color: #666; font-size: 13px; cursor: pointer; text-align: left; width: 100%; }
-  .back-btn-left:hover { background: #eee; color: #333; }
-  .back-btn-center { padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f8f6; color: #666; font-size: 13px; cursor: pointer; text-align: center; width: 100%; }
-  .back-btn-center:hover { background: #eee; color: #333; }
-  .result-card { margin: 0 16px 12px; border: 1px solid #e5e5e5; border-radius: 14px; overflow: hidden; }
-  .result-header { background: #EEEDFE; padding: 12px 16px; }
-  .result-title { font-size: 15px; font-weight: 600; color: #3C3489; }
-  .result-subtitle { font-size: 12px; color: #534AB7; margin-top: 2px; }
-  .result-body { padding: 14px 16px; display: flex; flex-direction: column; gap: 14px; }
-  .result-section { display: flex; flex-direction: column; gap: 6px; }
-  .result-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-  .result-content { font-size: 14px; color: #111; line-height: 1.6; }
-  .checklist-item { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: #111; line-height: 1.5; }
-  .check-icon { width: 18px; height: 18px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
-  .notice-box { background: #FAEEDA; border-radius: 10px; padding: 10px 12px; font-size: 13px; color: #633806; line-height: 1.6; display: flex; flex-direction: column; gap: 6px; }
-  .notice-item { display: flex; gap: 8px; }
-  .notice-num { font-weight: 600; flex-shrink: 0; }
-  .cost-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
-  .cost-row:last-child { border-bottom: none; }
-  .cost-label { font-size: 13px; color: #666; }
-  .cost-value { font-size: 14px; font-weight: 600; color: #111; }
-  .section-divider { border: none; border-top: 1px solid #f0f0f0; margin: 4px 0; }
-  .section-tag { font-size: 11px; font-weight: 600; color: #534AB7; background: #EEEDFE; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
-  .mail-box { margin: 0 16px 12px; background: #f8f8f6; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; }
-  .mail-label { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-  .mail-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
-  .mail-addr { font-size: 14px; color: #534AB7; font-weight: 600; }
-  .mail-desc { font-size: 13px; color: #666; line-height: 1.5; margin-top: 2px; }
-  .bottom-btns { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 6px; }
-  .restart-btn { padding: 10px 14px; border: 1px solid #d0d0d0; border-radius: 10px; background: #fff; color: #666; font-size: 13px; cursor: pointer; width: 100%; }
-  .restart-btn:hover { background: #f5f5f5; }
+  .msg.u { flex-direction: row-reverse; }
+  .bbl { padding: 10px 14px; border-radius: 16px; font-size: 14px; line-height: 1.6; max-width: 82%; }
+  .bbl.b { background: #f2f2f0; color: #111; border-bottom-left-radius: 4px; }
+  .bbl.u { background: #534AB7; color: #fff; border-bottom-right-radius: 4px; }
+  .asm { width: 28px; height: 28px; border-radius: 50%; background: #EEEDFE; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+  .ow { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .ob { padding: 10px 14px; border: 1px solid #d0d0d0; border-radius: 10px; background: #fff; color: #111; font-size: 14px; cursor: pointer; text-align: left; width: 100%; }
+  .ob:hover { background: #f5f5f5; }
+  .bkl { padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f8f6; color: #666; font-size: 13px; cursor: pointer; text-align: left; width: 100%; }
+  .bkl:hover { background: #eee; color: #333; }
+  .bkc { padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 10px; background: #f8f8f6; color: #666; font-size: 13px; cursor: pointer; text-align: center; width: 100%; }
+  .bkc:hover { background: #eee; color: #333; }
+  .rc { margin: 0 16px 12px; border: 1px solid #e5e5e5; border-radius: 14px; overflow: hidden; }
+  .rh { background: #EEEDFE; padding: 12px 16px; }
+  .rt { font-size: 15px; font-weight: 600; color: #3C3489; }
+  .rs { font-size: 12px; color: #534AB7; margin-top: 2px; }
+  .rb { padding: 14px 16px; display: flex; flex-direction: column; gap: 14px; }
+  .rl { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 4px; }
+  .rsec { display: flex; flex-direction: column; gap: 6px; }
+  .rcon { font-size: 14px; color: #111; line-height: 1.6; }
+  .ci { display: flex; gap: 8px; align-items: flex-start; font-size: 14px; color: #111; line-height: 1.5; }
+  .ck { width: 18px; height: 18px; border-radius: 50%; background: #E1F5EE; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .cr { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid #f0f0f0; }
+  .cr:last-child { border-bottom: none; }
+  .cl { font-size: 13px; color: #666; }
+  .cv { font-size: 14px; font-weight: 600; color: #111; }
+  .sd { border: none; border-top: 1px solid #f0f0f0; margin: 4px 0; }
+  .stag { font-size: 11px; font-weight: 600; color: #534AB7; background: #EEEDFE; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+  .ptag { font-size: 11px; font-weight: 600; color: #3C3489; background: #dddcfc; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 6px; }
+  .nb { background: #FAEEDA; border-radius: 10px; padding: 10px 12px; font-size: 13px; color: #633806; line-height: 1.6; display: flex; flex-direction: column; gap: 6px; }
+  .ni { display: flex; gap: 8px; }
+  .nn { font-weight: 600; flex-shrink: 0; }
+  .mb { margin: 0 16px 12px; background: #f8f8f6; border-radius: 10px; padding: 12px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .mbl { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; }
+  .mbr { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+  .mba { font-size: 14px; color: #534AB7; font-weight: 600; }
+  .mbd { font-size: 13px; color: #666; line-height: 1.5; margin-top: 2px; }
+  .btns { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 6px; }
+  .rb2 { padding: 10px 14px; border: 1px solid #d0d0d0; border-radius: 10px; background: #fff; color: #666; font-size: 13px; cursor: pointer; width: 100%; }
+  .rb2:hover { background: #f5f5f5; }
 </style>
 </head>
 <body>
-<div class="bot-wrap">
-  <div class="chat-box">
-    <div class="chat-header">
-      <div class="bot-avatar">✈</div>
-      <div>
-        <div class="chat-header-text">비자 서류 안내</div>
-        <div class="chat-header-sub">필요 서류를 안내해드릴게요</div>
-      </div>
-    </div>
-    <div class="messages" id="messages"></div>
-    <div id="options-area"></div>
-  </div>
-</div>
-
+<div class="bw"><div class="cb">
+  <div class="ch"><div class="ca">✈</div><div><div class="cht">비자 서류 안내</div><div class="chs">필요 서류를 안내해드릴게요</div></div></div>
+  <div class="msgs" id="msgs"></div>
+  <div id="opts"></div>
+</div></div>
 <script>
-const history = [];
-const vietnamNotices = [
-  '필요서류를 메일로 보내주실 때, 머무르실 베트남 주소와 연락처를 작성해주세요.',
-  '비자는 입국예정일부터 유효기간이 시작되므로, 정확한 입국일~출국일을 입력해주세요. 일정 변동 가능성이 있다면 여유있는 날짜로 신청하시는 것을 권장합니다.'
-];
-const results = {
-  vn_30: {
-    title: '베트남 관광비자 30일 단수',
-    sections: [{ docs: ['여권 사본 (빛번짐 없이 선명하게)', '증명사진 사본'], costs: [{ label: '비자 수수료', value: 'USD $25' }, { label: '대행 수수료', value: '20,000원' }], duration: '4~5 영업일' }],
-    notices: vietnamNotices
-  },
-  vn_90: {
-    title: '베트남 관광비자 90일 복수',
-    sections: [{ docs: ['여권 사본 (빛번짐 없이 선명하게)', '증명사진 사본'], costs: [{ label: '비자 수수료', value: 'USD $50' }, { label: '대행 수수료', value: '20,000원' }], duration: '4~5 영업일' }],
-    notices: vietnamNotices
-  },
-  id_bali: {
-    title: '인도네시아 30일 도착비자 (VOA) — 발리',
-    sections: [
-      { tag: '비자', docs: ['증명사진 사본', '여권 사본 (빛번짐 없이 선명하게)', '이티켓'], costs: [{ label: '비자 수수료', value: '519,500 루피아' }, { label: '대행 수수료', value: '20,000원' }], duration: '약 1~2 영업일' },
-      { tag: '관광세 (Love Bali)', docs: ['여권 사본 (빛번짐 없이 선명하게)'], costs: [{ label: '관광세', value: '154,500 루피아' }, { label: '수수료', value: '20,000원 (비자와 함께 요청 시 면제)' }], duration: null }
-    ],
-    notices: []
-  },
-  id_jakarta: {
-    title: '인도네시아 30일 도착비자 (VOA) — 자카르타',
-    sections: [{ docs: ['증명사진 사본', '여권 사본 (빛번짐 없이 선명하게)', '이티켓'], costs: [{ label: '비자 수수료', value: '519,500 루피아' }, { label: '대행 수수료', value: '20,000원' }], duration: '약 1~2 영업일' }],
-    notices: []
-  }
+const H=[];
+const chk=`<svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const vnNotices=['필요서류를 메일로 보내주실 때, 머무르실 베트남 주소와 연락처를 작성해주세요.','비자는 입국예정일부터 유효기간이 시작되므로, 정확한 입국일~출국일을 입력해주세요. 일정 변동 가능성이 있다면 여유있는 날짜로 신청하시는 것을 권장합니다.'];
+
+const vnResults={
+  vn_30:{title:'베트남 관광비자 30일 단수',sections:[{docs:['여권 사본 (빛번짐 없이 선명하게)','증명사진 사본'],costs:[{l:'비자 수수료',v:'USD $25'},{l:'대행 수수료',v:'20,000원'}],duration:'4~5 영업일'}],notices:vnNotices},
+  vn_90:{title:'베트남 관광비자 90일 복수',sections:[{docs:['여권 사본 (빛번짐 없이 선명하게)','증명사진 사본'],costs:[{l:'비자 수수료',v:'USD $50'},{l:'대행 수수료',v:'20,000원'}],duration:'4~5 영업일'}],notices:vnNotices},
+  id_bali:{title:'인도네시아 30일 도착비자 (VOA) — 발리',sections:[{tag:'비자',docs:['증명사진 사본','여권 사본 (빛번짐 없이 선명하게)','이티켓'],costs:[{l:'비자 수수료',v:'519,500 루피아'},{l:'대행 수수료',v:'20,000원'}],duration:'약 1~2 영업일'},{tag:'관광세 (Love Bali)',docs:['여권 사본 (빛번짐 없이 선명하게)'],costs:[{l:'관광세',v:'154,500 루피아'},{l:'수수료',v:'20,000원 (비자와 함께 요청 시 면제)'}],duration:null}],notices:[]},
+  id_jakarta:{title:'인도네시아 30일 도착비자 (VOA) — 자카르타',sections:[{docs:['증명사진 사본','여권 사본 (빛번짐 없이 선명하게)','이티켓'],costs:[{l:'비자 수수료',v:'519,500 루피아'},{l:'대행 수수료',v:'20,000원'}],duration:'약 1~2 영업일'}],notices:[]}
 };
 
-function addBotMsg(text) {
-  const msgs = document.getElementById('messages');
-  msgs.innerHTML += `<div class="msg"><div class="avatar-sm">✈</div><div class="bubble bot">${text}</div></div>`;
-  msgs.scrollTop = msgs.scrollHeight;
+const cnDocs={
+  adult_tour:['신청서','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','호텔바우처 (신청자 이름 필수)','이티켓','여행일정표'],
+  adult_biz:['신청서','여권 원본','증명사진 원본','ARC 앞뒷면 사본','출입국사실증명서 원본 (3년간)','중국 발행 초청장'],
+  minor_kr:{self:['신청서','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','기본증명서 상세본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류','기본증명서 상세본 (한국 국적 변경자에 해당)']},
+  minor_orig:{self:['신청서','여권 원본','증명사진 1매','외국인 등록증 사본 (앞뒷면)','출입국사실증명서 원본 (3년간)','외국인등록사실증명원 원본'],parent:['부모님 두 명의 여권 사본','부모님 두 명의 ARC 사본','부모님 두 명의 외국인등록사실증명원 원본','부모님 두 명의 출입국사실증명원 원본','비자 신청자 출생 당시 여권 사본 또는 국적 증명 서류']}
+};
+
+const cnCosts={
+  us:{tour:'415,000원',biz:'415,000원'},
+  ca:{tour:'220,000원',biz:'220,000원'},
+  other:{single:'135,000원',double:'180,000원',multi:'220,000원'}
+};
+
+const st={country:'',nat:'',visa:'',age:'',minor:'',visits:''};
+
+function addBot(t){const m=document.getElementById('msgs');m.innerHTML+=`<div class="msg"><div class="asm">✈</div><div class="bbl b">${t}</div></div>`;m.scrollTop=m.scrollHeight;}
+function addUser(t){const m=document.getElementById('msgs');m.innerHTML+=`<div class="msg u"><div class="bbl u">${t}</div></div>`;m.scrollTop=m.scrollHeight;}
+function save(){H.push({m:document.getElementById('msgs').innerHTML,o:document.getElementById('opts').innerHTML});}
+function back(){if(!H.length)return;const p=H.pop();document.getElementById('msgs').innerHTML=p.m;document.getElementById('opts').innerHTML=p.o;}
+
+function showOpts(opts,backable){
+  const a=document.getElementById('opts');
+  const b=opts.map(o=>`<button class="ob" onclick="hc('${o.v}','${encodeURIComponent(o.l)}','${o.n}')">${o.l}</button>`).join('');
+  const bk=backable?`<button class="bkl" onclick="back()">← 뒤로가기</button>`:'';
+  a.innerHTML=`<div class="ow">${b}${bk}</div>`;
 }
-function addUserMsg(text) {
-  const msgs = document.getElementById('messages');
-  msgs.innerHTML += `<div class="msg user"><div class="bubble user">${text}</div></div>`;
-  msgs.scrollTop = msgs.scrollHeight;
+
+function docList(docs){return docs.map(d=>`<div class="ci"><div class="ck">${chk}</div><span>${d}</span></div>`).join('');}
+function costRow(l,v){return`<div class="cr"><span class="cl">${l}</span><span class="cv">${v}</span></div>`;}
+
+function showVnResult(key){
+  const r=vnResults[key];
+  const email=atob('eW1sOTY5OEBnbWFpbC5jb20=');
+  const secs=r.sections.map((s,i)=>{
+    const tag=s.tag?`<div class="stag">${s.tag}</div>`:'';
+    const dur=s.duration?`<div class="rsec"><div class="rl">소요기간</div><div class="rcon">${s.duration}</div></div>`:'';
+    return (i>0?'<hr class="sd">':'')+`${tag}<div class="rsec"><div class="rl">필요 서류</div>${docList(s.docs)}</div><div class="rsec"><div class="rl">비용</div>${s.costs.map(c=>costRow(c.l,c.v)).join('')}</div>${dur}`;
+  }).join('');
+  const notices=r.notices.length?`<div class="rsec"><div class="rl">유의사항</div><div class="nb">${r.notices.map((n,i)=>`<div class="ni"><span class="nn">${i+1}.</span><span>${n}</span></div>`).join('')}</div></div>`:'';
+  document.getElementById('opts').innerHTML=`
+    <div class="rc"><div class="rh"><div class="rt">${r.title}</div><div class="rs">신청 서류 안내</div></div><div class="rb">${secs}${notices}</div></div>
+    <div class="mb"><div class="mbl">서류 제출</div><div class="mbr"><span style="font-size:16px">✉</span><span class="mba">${email}</span></div><div class="mbd">위 이메일로 필요 서류를 보내주시면 빠르게 처리해드립니다.</div></div>
+    <div class="btns"><button class="rb2" onclick="restart()">처음으로 돌아가기</button><button class="bkc" onclick="back()">← 뒤로가기</button></div>`;
 }
-function saveHistory() {
-  history.push({ messagesHTML: document.getElementById('messages').innerHTML, optionsHTML: document.getElementById('options-area').innerHTML });
+
+function showCnResult(){
+  const email=atob('eW1sOTY5OEBnbWFpbC5jb20=');
+  const isTour=st.visa==='tour';
+  const isAdult=st.age==='adult';
+  const nat=st.nat;
+  let title='중국 비자 신청 안내';
+  let costVal='';
+
+  if(nat==='us'||nat==='ca'){
+    const nl=nat==='us'?'미국':'캐나다';
+    const vl=isTour?'관광비자 (10년 복수)':'교류/상용비자 (단수)';
+    title=`중국 비자 — ${nl} / ${vl}`;
+    costVal=nat==='us'?(isTour?cnCosts.us.tour:cnCosts.us.biz):(isTour?cnCosts.ca.tour:cnCosts.ca.biz);
+  } else {
+    let vl='';
+    if(st.visits==='none'){vl='단수비자 (3개월 내 1회 입국 가능)';costVal=cnCosts.other.single;}
+    else if(st.visits==='1-2'){vl='더블비자 (6개월 내 2회 입국 가능)';costVal=cnCosts.other.double;}
+    else{vl='복수비자 (1년간 다회 입국 가능)';costVal=cnCosts.other.multi;}
+    title=`중국 비자 — 기타 국적 / ${vl}`;
+  }
+
+  let docsHTML='';
+  if(isAdult){
+    docsHTML=`<div class="rsec"><div class="rl">필요 서류</div>${docList(cnDocs[isTour?'adult_tour':'adult_biz'])}</div>`;
+  } else {
+    const mk=st.minor==='kr'?'minor_kr':'minor_orig';
+    docsHTML=`<div class="rsec"><div class="stag">본인 서류</div><div class="rl">필요 서류</div>${docList(cnDocs[mk].self)}</div><hr class="sd"><div class="rsec"><div class="ptag">부모님 서류</div><div class="rl">추가 서류</div>${docList(cnDocs[mk].parent)}</div>`;
+  }
+
+  const noticeHTML=st.visits==='3+'?`<div class="rsec"><div class="rl">유의사항</div><div class="nb"><div class="ni"><span class="nn">1.</span><span>3회 이상 중국 비자 발급 및 입국 스탬프가 확인되어야 복수비자 신청이 가능합니다.</span></div></div></div>`:'';
+
+  document.getElementById('opts').innerHTML=`
+    <div class="rc"><div class="rh"><div class="rt">${title}</div><div class="rs">신청 서류 안내</div></div>
+    <div class="rb">${docsHTML}<div class="rsec"><div class="rl">비용</div>${costRow('비자 수수료',costVal)}${costRow('대행 수수료','20,000원')}</div><div class="rsec"><div class="rl">소요기간</div><div class="rcon">약 7~9 영업일</div></div>${noticeHTML}</div></div>
+    <div class="mb"><div class="mbl">서류 제출</div><div class="mbr"><span style="font-size:16px">✉</span><span class="mba">${email}</span></div><div class="mbd">위 이메일로 필요 서류를 보내주시면 빠르게 처리해드립니다.</div></div>
+    <div class="btns"><button class="rb2" onclick="restart()">처음으로 돌아가기</button><button class="bkc" onclick="back()">← 뒤로가기</button></div>`;
 }
-function goBack() {
-  if (!history.length) return;
-  const prev = history.pop();
-  document.getElementById('messages').innerHTML = prev.messagesHTML;
-  document.getElementById('options-area').innerHTML = prev.optionsHTML;
-}
-function showOptions(options, backable) {
-  const area = document.getElementById('options-area');
-  const btnsHTML = options.map(o => `<button class="opt-btn" onclick="handleClick('${o.value}','${o.label}','${o.next}')">${o.label}</button>`).join('');
-  const backHTML = backable ? `<button class="back-btn-left" onclick="goBack()">← 뒤로가기</button>` : '';
-  area.innerHTML = `<div class="options-wrap">${btnsHTML}${backHTML}</div>`;
-}
-function renderSection(sec) {
-  const docsHTML = sec.docs.map(d => `<div class="checklist-item"><div class="check-icon"><svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5 3.5-4" stroke="#0F6E56" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>${d}</span></div>`).join('');
-  const costsHTML = sec.costs.map(c => `<div class="cost-row"><span class="cost-label">${c.label}</span><span class="cost-value">${c.value}</span></div>`).join('');
-  const tagHTML = sec.tag ? `<div class="section-tag">${sec.tag}</div>` : '';
-  const durationHTML = sec.duration ? `<div class="result-section"><div class="result-label">소요기간</div><div class="result-content">${sec.duration}</div></div>` : '';
-  return `${tagHTML}<div class="result-section"><div class="result-label">필요 서류</div>${docsHTML}</div><div class="result-section"><div class="result-label">비용</div>${costsHTML}</div>${durationHTML}`;
-}
-function showResult(key) {
-  const r = results[key];
-  const area = document.getElementById('options-area');
-  const email = atob('eW1sOTY5OEBnbWFpbC5jb20=');
-  const sectionsHTML = r.sections.map((sec, i) => (i > 0 ? '<hr class="section-divider">' : '') + renderSection(sec)).join('');
-  const noticesHTML = r.notices.length > 0 ? `<div class="result-section"><div class="result-label">유의사항</div><div class="notice-box">${r.notices.map((n, i) => `<div class="notice-item"><span class="notice-num">${i+1}.</span><span>${n}</span></div>`).join('')}</div></div>` : '';
-  area.innerHTML = `
-    <div class="result-card">
-      <div class="result-header"><div class="result-title">${r.title}</div><div class="result-subtitle">신청 서류 안내</div></div>
-      <div class="result-body">${sectionsHTML}${noticesHTML}</div>
-    </div>
-    <div class="mail-box">
-      <div class="mail-label">서류 제출</div>
-      <div class="mail-row"><span style="font-size:16px;">✉</span><span class="mail-addr">${email}</span></div>
-      <div class="mail-desc">위 이메일로 필요 서류를 보내주시면 빠르게 처리해드립니다.</div>
-    </div>
-    <div class="bottom-btns">
-      <button class="restart-btn" onclick="restart()">처음으로 돌아가기</button>
-      <button class="back-btn-center" onclick="goBack()">← 뒤로가기</button>
-    </div>`;
-}
-function handleClick(value, label, next) {
-  saveHistory();
-  addUserMsg(label);
-  document.getElementById('options-area').innerHTML = '';
-  setTimeout(() => {
-    if (next === 'visaType') {
-      addBotMsg(value === 'vietnam' ? '베트남 비자 종류를 선택해주세요.' : '인도네시아 비자 종류를 선택해주세요.');
-      if (value === 'vietnam') {
-        showOptions([{ label: '관광비자 30일 단수', value: 'vn_30', next: 'result_vn_30' }, { label: '관광비자 90일 복수', value: 'vn_90', next: 'result_vn_90' }], true);
+
+function hc(v,l,n){
+  save();
+  const label=decodeURIComponent(l);
+  addUser(label);
+  document.getElementById('opts').innerHTML='';
+  setTimeout(()=>{
+    if(n==='country'){
+      st.country=v;
+      if(v==='vietnam'){
+        addBot('비자 신청자의 비자 종류를 선택해주세요.');
+        showOpts([{v:'vn_30',l:'관광비자 30일 단수',n:'vn_result'},{v:'vn_90',l:'관광비자 90일 복수',n:'vn_result'}],true);
+      } else if(v==='indonesia'){
+        addBot('비자 신청자의 비자 종류를 선택해주세요.');
+        showOpts([{v:'id_voa',l:'30일 도착비자 (VOA)',n:'id_dest'}],true);
       } else {
-        showOptions([{ label: '30일 도착비자 (VOA)', value: 'id_voa', next: 'destination' }], true);
+        addBot('비자 신청자의 국적을 선택해주세요.');
+        showOpts([{v:'us',l:'미국',n:'cn_nat'},{v:'ca',l:'캐나다',n:'cn_nat'},{v:'other',l:'기타 국적',n:'cn_nat'}],true);
       }
-    } else if (next === 'destination') {
-      addBotMsg('목적지를 선택해주세요.');
-      showOptions([{ label: '발리', value: 'id_bali', next: 'result_id_bali' }, { label: '자카르타', value: 'id_jakarta', next: 'result_id_jakarta' }], true);
-    } else if (next.startsWith('result_')) {
-      const key = next.replace('result_', '');
-      addBotMsg('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
-      setTimeout(() => showResult(key), 300);
+    } else if(n==='vn_result'){
+      addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
+      setTimeout(()=>showVnResult(v),300);
+    } else if(n==='id_dest'){
+      addBot('비자 신청자의 목적지를 선택해주세요.');
+      showOpts([{v:'id_bali',l:'발리',n:'id_result'},{v:'id_jakarta',l:'자카르타',n:'id_result'}],true);
+    } else if(n==='id_result'){
+      addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
+      setTimeout(()=>showVnResult(v),300);
+    } else if(n==='cn_nat'){
+      st.nat=v;
+      addBot('비자 신청자의 나이를 선택해주세요.');
+      showOpts([{v:'adult',l:'성인',n:'cn_age'},{v:'minor',l:'미성년 (18세 미만)',n:'cn_age'}],true);
+    } else if(n==='cn_age'){
+      st.age=v;
+      if(v==='minor'){
+        addBot('비자 신청자의 출생 구분을 선택해주세요.');
+        showOpts([{v:'kr',l:'한국 출생',n:'cn_minor'},{v:'orig',l:'오리지널 (한국 외 출생)',n:'cn_minor'}],true);
+      } else {
+        addBot('비자 신청자의 비자 종류를 선택해주세요.');
+        showOpts([{v:'tour',l:'관광비자',n:'cn_visa'},{v:'biz',l:'교류/상용비자',n:'cn_visa'}],true);
+      }
+    } else if(n==='cn_minor'){
+      st.minor=v;
+      addBot('비자 신청자의 비자 종류를 선택해주세요.');
+      showOpts([{v:'tour',l:'관광비자',n:'cn_visa'},{v:'biz',l:'교류/상용비자',n:'cn_visa'}],true);
+    } else if(n==='cn_visa'){
+      st.visa=v;
+      if(st.nat==='other'){
+        addBot('비자 신청자의 중국 방문 횟수를 선택해주세요.');
+        showOpts([{v:'none',l:'없음',n:'cn_visits'},{v:'1-2',l:'1~2회',n:'cn_visits'},{v:'3+',l:'3회 이상',n:'cn_visits'}],true);
+      } else {
+        addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
+        setTimeout(()=>showCnResult(),300);
+      }
+    } else if(n==='cn_visits'){
+      st.visits=v;
+      addBot('알겠습니다! 아래에서 필요 서류와 안내사항을 확인해주세요.');
+      setTimeout(()=>showCnResult(),300);
     }
-  }, 300);
+  },300);
 }
-function restart() {
-  history.length = 0;
-  document.getElementById('messages').innerHTML = '';
-  document.getElementById('options-area').innerHTML = '';
-  init();
-}
-function init() {
-  setTimeout(() => {
-    addBotMsg('안녕하세요! 비자 신청 서류를 안내해드릴게요. 어느 나라 비자를 신청하시나요?');
-    showOptions([{ label: '베트남', value: 'vietnam', next: 'visaType' }, { label: '인도네시아', value: 'indonesia', next: 'visaType' }], false);
-  }, 200);
+
+function restart(){H.length=0;Object.keys(st).forEach(k=>st[k]='');document.getElementById('msgs').innerHTML='';document.getElementById('opts').innerHTML='';init();}
+
+function init(){
+  setTimeout(()=>{
+    addBot('안녕하세요! 비자 신청 서류를 안내해드릴게요. 비자 신청자의 목적지 국가를 선택해주세요.');
+    showOpts([{v:'vietnam',l:'베트남',n:'country'},{v:'indonesia',l:'인도네시아',n:'country'},{v:'china',l:'중국',n:'country'}],false);
+  },200);
 }
 init();
 </script>
